@@ -1,26 +1,12 @@
 .contactList {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
   padding: 0;
   list-style: none;
   margin: 0;
 }
 
 .contactItem {
-  flex: 1 0 calc(33.333% - 10px);
-  min-width: 200px;
-  box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-  .contactItem {
-    flex: 1 0 calc(50% - 10px);
-  }
-}
-
-@media (max-width: 480px) {
-  .contactItem {
-    flex: 1 0 100%;
-  }
+  display: flex;
 }

@@ -10,17 +10,14 @@ const ContactSchema = Yup.object().shape({
     .required('Required'),
   number: Yup.string()
     .min(3, 'Too Short!')
-    .max(50, 'Too Long!')
+    .max(20, 'Too Long!')
     .required('Required'),
 });
 
 const ContactForm = ({ onAddContact }) => {
   return (
     <Formik
-      initialValues={{
-        name: '',
-        number: '',
-      }}
+      initialValues={{ name: '', number: '' }}
       validationSchema={ContactSchema}
       onSubmit={(values, actions) => {
         onAddContact({
@@ -32,15 +29,33 @@ const ContactForm = ({ onAddContact }) => {
       }}
     >
       <Form className={css.form}>
+        <h2 className={css.formTitle}>Add New Contact</h2>
+
         <div className={css.formGroup}>
-          <label htmlFor="name">Name</label>
-          <Field type="text" name="name" id="name" />
+          <label htmlFor="name" className={css.label}>
+            Name
+          </label>
+          <Field
+            type="text"
+            name="name"
+            id="name"
+            className={css.input}
+            placeholder="Enter name"
+          />
           <ErrorMessage name="name" component="div" className={css.error} />
         </div>
 
         <div className={css.formGroup}>
-          <label htmlFor="number">Number</label>
-          <Field type="text" name="number" id="number" />
+          <label htmlFor="number" className={css.label}>
+            Phone Number
+          </label>
+          <Field
+            type="text"
+            name="number"
+            id="number"
+            className={css.input}
+            placeholder="Enter phone number"
+          />
           <ErrorMessage name="number" component="div" className={css.error} />
         </div>
 
