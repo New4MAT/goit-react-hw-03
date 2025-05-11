@@ -1,0 +1,62 @@
+.contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: all 0.2s ease;
+  min-height: 60px;
+}
+
+.contact:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.contactInfo {
+  flex: 1;
+  min-width: 0;
+  padding-right: 10px;
+}
+
+.name {
+  font-weight: 600;
+  margin: 0 0 3px 0;
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.number {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deleteButton {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 10px;
+}
+
+.deleteButton:hover {
+  background-color: #cc0000;
+  transform: translateY(-1px);
+}
+
+.deleteButton:active {
+  transform: translateY(0);
+}

@@ -1,53 +1,61 @@
 import { useState, useEffect } from 'react';
-import Description from './components/Description/Description';
-import Options from './components/Options/Options';
-import Feedback from './components/Feedback/Feedback';
-import Notification from './components/Notification/Notification';
-import css from './App.module.css';
+import ContactForm from './components/ContactForm/ContactForm';
+import ContactList from './components/ContactList/ContactList';
+import SearchBox from './components/SearchBox/SearchBox';
+import './App.module.css';
 
-export default function App() {
-  const [feedback, setFeedback] = useState(() => {
-    const savedFeedback = localStorage.getItem('feedback');
-    return savedFeedback
-      ? JSON.parse(savedFeedback)
-      : { good: 0, neutral: 0, bad: 0 };
+function App() {
+  const [contacts, setContacts] = useState(() => {
+    const savedContacts = localStorage.getItem('contacts');
+    return savedContacts
+      ? JSON.parse(savedContacts)
+      : [
+          { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+          { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+          { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+          { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+        ];
   });
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('feedback', JSON.stringify(feedback));
-  }, [feedback]);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
-  const updateFeedback = feedbackType => {
-    setFeedback(prev => ({
-      ...prev,
-      [feedbackType]: prev[feedbackType] + 1,
-    }));
+  const addContact = newContact => {
+    const isExist = contacts.some(
+      contact => contact.name.toLowerCase() === newContact.name.toLowerCase(),
+    );
+
+    if (isExist) {
+      alert(`${newContact.name} is already in contacts.`);
+      return;
+    }
+
+    setContacts(prevContacts => [...prevContacts, newContact]);
   };
 
-  const resetFeedback = () => {
-    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  const deleteContact = contactId => {
+    setContacts(prevContacts =>
+      prevContacts.filter(contact => contact.id !== contactId),
+    );
   };
 
-  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positiveFeedback = Math.round((feedback.good / totalFeedback) * 100);
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase()),
+  );
 
   return (
-    <div className={css.container}>
-      <Description />
-      <Options
-        updateFeedback={updateFeedback}
-        resetFeedback={resetFeedback}
-        hasFeedback={totalFeedback > 0}
+    <div>
+      <h1>Phonebook</h1>
+      <ContactForm onAddContact={addContact} />
+      <SearchBox value={filter} onChange={e => setFilter(e.target.value)} />
+      <ContactList
+        contacts={filteredContacts}
+        onDeleteContact={deleteContact}
       />
-      {totalFeedback > 0 ? (
-        <Feedback
-          feedback={feedback}
-          total={totalFeedback}
-          positive={positiveFeedback}
-        />
-      ) : (
-        <Notification />
-      )}
     </div>
   );
 }
+
+export default App;
